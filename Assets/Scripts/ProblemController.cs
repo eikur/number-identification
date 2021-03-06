@@ -7,10 +7,11 @@ public class ProblemController : MonoBehaviour
 
     [SerializeField] QuestionView _questionView;
     [SerializeField] ScoreView _scoreView;
-    [SerializeField] Transform _answersContainer;
+    [SerializeField] AnswerViewContainer _answerContainer;
     [SerializeField] AnswerView _answerPrefab;
 
     ProblemConfig _currentProblemConfig;
+    AnswerView _correctAnswerView;
     int _currentProblemIndex = 0;
     bool _isFirstTry = false;
 
@@ -28,12 +29,16 @@ public class ProblemController : MonoBehaviour
 
     void Init()
     {
+        _questionView.OnAnimationFinished += QuestionAnimationFinished;
+        _answerContainer.OnAnimationInFinished += AnswersAnimationInFinished;
+        _answerContainer.OnAnimationOutFinished += AnswersAnimationOutFinished;
+
         _scoreModel.Reset();
 
         _scoreView.Init(_scoreModel);
         _scoreView.Update();
 
-        ShowCurrentProblem();
+        ShowCurrentProblemQuestion();
     }
 
     void ClickedAnswer(AnswerConfig answerConfig)
@@ -49,14 +54,15 @@ public class ProblemController : MonoBehaviour
                 _scoreModel.SecondTry++;
             }
 
-            TryShowNextProblem();
+            _answerContainer.Hide();
             return;
         }
 
         if (!_isFirstTry)
         {
             _scoreModel.Incorrect++;
-            TryShowNextProblem();
+            _correctAnswerView.HighlightCorrect();
+            _answerContainer.Hide();
             return;
         }
 
@@ -71,45 +77,83 @@ public class ProblemController : MonoBehaviour
 
         if (_currentProblemIndex >= _problemsConfig.Problems.Count)
         {
-            _questionView.Show("Congrats! You reached the end!", false);
+            _questionView.ShowMessage("Congrats! You reached the end!");
             CleanAnswers();
         }
         else
         {
-            ShowCurrentProblem();
+            ShowCurrentProblemQuestion();
         }
     }
 
-    void ShowCurrentProblem()
+    void ShowCurrentProblemQuestion()
+    {
+        _currentProblemConfig = _problemsConfig.Problems[_currentProblemIndex];
+        _isFirstTry = true;
+
+        _questionView.Show(_currentProblemConfig.QuestionLiteral);
+    }
+
+    void ShowCurrentProblemAnswers()
     {
         CleanAnswers();
 
-        _currentProblemConfig = _problemsConfig.Problems[_currentProblemIndex];
-        _questionView.Show(_currentProblemConfig.QuestionLiteral);
-
         foreach (var answerConfig in _currentProblemConfig.Answers)
         {
-            var answerButtonGo = Instantiate(_answerPrefab, _answersContainer);
-            var answerButton = answerButtonGo.GetComponent<AnswerView>();
-            answerButton.Init(answerConfig);
-            answerButton.OnClicked += ClickedAnswer;
+            var answerViewGo = Instantiate(_answerPrefab, _answerContainer.transform);
+            var answerView = answerViewGo.GetComponent<AnswerView>();
+            answerView.Init(answerConfig);
+            answerView.OnClicked += ClickedAnswer;
+
+            if (answerConfig.IsCorrect)
+            {
+                if (_correctAnswerView != null)
+                {
+                    Debug.LogError($"There are at least two correctly configured answers in problem {_currentProblemConfig.Id}");
+                }
+                _correctAnswerView = answerView;
+            }
         }
 
-        _isFirstTry = true;
+        _answerContainer.Show();
     }
 
     void CleanAnswers()
     {
-        int children = _answersContainer.childCount;
+        int children = _answerContainer.transform.childCount;
         for (int i = children - 1; i >= 0; i--)
         {
-            GameObject.DestroyImmediate(_answersContainer.GetChild(i).gameObject);
+            GameObject.DestroyImmediate(_answerContainer.transform.GetChild(i).gameObject);
         }
+
+        _correctAnswerView = null;
     }
 
     void ShowMisconfiguration()
     {
-        _questionView.Show("There are no problems configured", false);
+        _questionView.ShowMessage("There are no problems configured");
         CleanAnswers();
+    }
+
+    void QuestionAnimationFinished()
+    {
+        ShowCurrentProblemAnswers();
+    }
+
+    void AnswersAnimationInFinished()
+    {
+        // added and left blank on purpose
+    }
+
+    void AnswersAnimationOutFinished()
+    {
+        TryShowNextProblem();
+    }
+
+    private void OnDestroy()
+    {
+        _questionView.OnAnimationFinished -= QuestionAnimationFinished;
+        _answerContainer.OnAnimationInFinished -= AnswersAnimationInFinished;
+        _answerContainer.OnAnimationOutFinished -= AnswersAnimationOutFinished;
     }
 }

@@ -19,9 +19,11 @@ public class AnswerView : MonoBehaviour
 
     public void Clicked()
     {
+        _button.interactable = false;
+
         if (_answerConfig.IsCorrect)
         {
-            _button.image.color = Color.green;
+            HighlightCorrect();
         }
         else
         {
@@ -31,4 +33,18 @@ public class AnswerView : MonoBehaviour
         OnClicked?.Invoke(_answerConfig);
     }
 
+    public void HighlightCorrect()
+    {
+        _button.image.color = Color.green;
+    }
+
+    void HighlightIncorrect()
+    {
+        _button.image.color = Color.red;
+    }
+
+    public void SetInteractable(bool value)
+    {
+        _button.interactable = value;
+    }
 }
