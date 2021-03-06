@@ -2,9 +2,11 @@
 
 public class ProblemController : MonoBehaviour
 {
+    [Header("Configuration")]
     [SerializeField] ScoreModel _scoreModel;
     [SerializeField] ProblemsConfig _problemsConfig;
 
+    [Header("Scene setup")]
     [SerializeField] QuestionView _questionView;
     [SerializeField] ScoreView _scoreView;
     [SerializeField] AnswerViewContainer _answerContainer;
@@ -71,11 +73,16 @@ public class ProblemController : MonoBehaviour
     void TryShowNextProblem()
     {
         _scoreView.Update();
-        _currentProblemIndex++;
-
-        if (_currentProblemIndex >= _problemsConfig.Problems.Count)
+        if (!_problemsConfig.UseCustomProblems)
         {
-            _questionView.ShowMessage("Congrats! You reached the end!");
+            ShowCurrentProblemQuestion();
+            return;
+        }
+
+        _currentProblemIndex++;
+        if (_currentProblemIndex >= _problemsConfig.CustomProblems.Count)
+        {
+            _questionView.ShowMessage("Enhorabuena! Has acabado los problemas custom!");
             CleanAnswers();
         }
         else
@@ -86,7 +93,15 @@ public class ProblemController : MonoBehaviour
 
     void ShowCurrentProblemQuestion()
     {
-        _currentProblemConfig = _problemsConfig.Problems[_currentProblemIndex];
+        if (_problemsConfig.UseCustomProblems)
+        {
+            _currentProblemConfig = _problemsConfig.CustomProblems[_currentProblemIndex];
+        }
+        else
+        {
+            _currentProblemConfig = _problemsConfig.GetRandomlyGeneratedProblem();
+        }
+        
         _isFirstTry = true;
 
         _questionView.Show(_currentProblemConfig.QuestionLiteral);
@@ -107,7 +122,7 @@ public class ProblemController : MonoBehaviour
             {
                 if (_correctAnswerView != null)
                 {
-                    Debug.LogError($"There are at least two correctly configured answers in problem {_currentProblemConfig.Id}");
+                    Debug.LogError($"Hay por lo menos dos respuestas marcadas como correctas en el problema custom {_currentProblemConfig.Id}");
                 }
                 _correctAnswerView = answerView;
             }

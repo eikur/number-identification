@@ -12,22 +12,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7436e905e35c92c449b9ee335fb49304, type: 3}
   m_Name: ProblemsConfig
   m_EditorClassIdentifier: 
-  Problems:
-  - Id: problem1
-    QuestionLiteral: Cinco
+  Numbers:
+  - Number: 0
+    Literal: Cero
+  - Number: 1
+    Literal: Uno
+  - Number: 2
+    Literal: Dos
+  - Number: 3
+    Literal: Tres
+  - Number: 4
+    Literal: Cuatro
+  - Number: 5
+    Literal: Cinco
+  - Number: 6
+    Literal: Seis
+  - Number: 7
+    Literal: Siete
+  - Number: 8
+    Literal: Ocho
+  - Number: 9
+    Literal: Nueve
+  responsesAvailable: 3
+  UseCustomProblems: 0
+  CustomProblems:
+  - Id: custom problem 1
+    QuestionLiteral: Diez
     Answers:
-    - AnswerLiteral: 1
+    - AnswerLiteral: 13
       IsCorrect: 0
-    - AnswerLiteral: 5
+    - AnswerLiteral: 10
       IsCorrect: 1
-    - AnswerLiteral: 9
+    - AnswerLiteral: 100
       IsCorrect: 0
-  - Id: problem2
-    QuestionLiteral: Quinientos diez
-    Answers:
-    - AnswerLiteral: 5
-      IsCorrect: 0
-    - AnswerLiteral: 9
-      IsCorrect: 0
-    - AnswerLiteral: 510
-      IsCorrect: 1
