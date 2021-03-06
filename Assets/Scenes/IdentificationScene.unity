@@ -966,12 +966,12 @@ PrefabInstance:
     - target: {fileID: 2129281441253111440, guid: e7c2e438617e7c34baa9dad9bd7adbd7,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2129281441253111440, guid: e7c2e438617e7c34baa9dad9bd7adbd7,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 2129281441253111440, guid: e7c2e438617e7c34baa9dad9bd7adbd7,
         type: 3}
@@ -1024,6 +1024,31 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 843531f9c71c34344810ff671bc95c44,
         type: 2}
+    - target: {fileID: 6293584300553370349, guid: e7c2e438617e7c34baa9dad9bd7adbd7,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.9607844
+      objectReference: {fileID: 0}
+    - target: {fileID: 6293584300553370349, guid: e7c2e438617e7c34baa9dad9bd7adbd7,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.9607844
+      objectReference: {fileID: 0}
+    - target: {fileID: 6293584300553370349, guid: e7c2e438617e7c34baa9dad9bd7adbd7,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.9607844
+      objectReference: {fileID: 0}
+    - target: {fileID: 6293584300553370349, guid: e7c2e438617e7c34baa9dad9bd7adbd7,
+        type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6293584300553370349, guid: e7c2e438617e7c34baa9dad9bd7adbd7,
+        type: 3}
+      propertyPath: m_Maskable
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e7c2e438617e7c34baa9dad9bd7adbd7, type: 3}
 --- !u!1001 &4074696747666304175

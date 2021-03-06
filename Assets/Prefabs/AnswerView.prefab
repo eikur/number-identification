@@ -165,8 +165,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbb0d193a9e1ac042815d48bca8f4df4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _canvasGroup: {fileID: 1209472399988840475}
   _button: {fileID: 8178358987239626951}
   _label: {fileID: 8178358987481191362}
+  _disappearTime: 1
 --- !u!225 &1209472399988840475
 CanvasGroup:
   m_ObjectHideFlags: 0

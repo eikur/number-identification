@@ -2,35 +2,39 @@
 using TMPro;
 using System;
 using UnityEngine.UI;
+using System.Collections;
 
 public class AnswerView : MonoBehaviour
 {
+    [SerializeField] CanvasGroup _canvasGroup;
     [SerializeField] Button _button;
     [SerializeField] TextMeshProUGUI _label;
-    AnswerConfig _answerConfig;
+    [SerializeField] float _disappearTime = 1f;
 
-    public event Action<AnswerConfig> OnClicked;
+    bool _isCorrect;
+
+    public event Action<AnswerView> OnClicked;
 
     public void Init(AnswerConfig answerConfig) 
     {
-        _answerConfig = answerConfig;
-        _label.text = _answerConfig.AnswerLiteral;
+        _label.text = answerConfig.AnswerLiteral;
+        _isCorrect = answerConfig.IsCorrect;
     }
 
     public void Clicked()
     {
-        _button.interactable = false;
+        _canvasGroup.interactable = false;
 
-        if (_answerConfig.IsCorrect)
+        if (_isCorrect)
         {
             HighlightCorrect();
         }
         else
         {
-            _button.image.color = Color.red;
+            HighlightIncorrect();
         }
 
-        OnClicked?.Invoke(_answerConfig);
+        OnClicked?.Invoke(this);
     }
 
     public void HighlightCorrect()
@@ -43,8 +47,21 @@ public class AnswerView : MonoBehaviour
         _button.image.color = Color.red;
     }
 
-    public void SetInteractable(bool value)
+    public void Hide()
     {
-        _button.interactable = value;
+        StartCoroutine(AnimateOut());
+    }
+
+    IEnumerator AnimateOut()
+    {
+        float elapsedTime = 0f;
+        while (elapsedTime < _disappearTime)
+        {
+            _canvasGroup.alpha = 1 - elapsedTime / _disappearTime;
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        _canvasGroup.alpha = 0f;
     }
 }

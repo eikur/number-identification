@@ -49,7 +49,7 @@ public class AnswerViewContainer : MonoBehaviour
         _canvasGroup.interactable = false;
 
         float elapsedTime = 0f;
-        while (elapsedTime < _appearTime)
+        while (elapsedTime < _disappearTime)
         {
             _canvasGroup.alpha = 1 - elapsedTime / _disappearTime;
             elapsedTime += Time.deltaTime;

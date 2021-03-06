@@ -25,13 +25,9 @@ MonoBehaviour:
   - Id: problem2
     QuestionLiteral: Quinientos diez
     Answers:
-    - AnswerLiteral: 1
-      IsCorrect: 0
     - AnswerLiteral: 5
       IsCorrect: 0
     - AnswerLiteral: 9
-      IsCorrect: 0
-    - AnswerLiteral: esta no
       IsCorrect: 0
     - AnswerLiteral: 510
       IsCorrect: 1

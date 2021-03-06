@@ -41,15 +41,12 @@ public class ProblemController : MonoBehaviour
         ShowCurrentProblemQuestion();
     }
 
-    void ClickedAnswer(AnswerConfig answerConfig)
+    void ClickedAnswerView(AnswerView answerView)
     {
-        if (answerConfig.IsCorrect)
+        if (answerView == _correctAnswerView)
         {
-            if (_isFirstTry)
-            {
-                _scoreModel.Correct++;
-            }
-            else
+            _scoreModel.Correct++;
+            if (!_isFirstTry)
             {
                 _scoreModel.SecondTry++;
             }
@@ -66,6 +63,7 @@ public class ProblemController : MonoBehaviour
             return;
         }
 
+        answerView.Hide();
         _isFirstTry = false;
     }
 
@@ -103,7 +101,7 @@ public class ProblemController : MonoBehaviour
             var answerViewGo = Instantiate(_answerPrefab, _answerContainer.transform);
             var answerView = answerViewGo.GetComponent<AnswerView>();
             answerView.Init(answerConfig);
-            answerView.OnClicked += ClickedAnswer;
+            answerView.OnClicked += ClickedAnswerView;
 
             if (answerConfig.IsCorrect)
             {
