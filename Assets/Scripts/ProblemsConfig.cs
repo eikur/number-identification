@@ -42,7 +42,9 @@ public class ProblemsConfig : ScriptableObject
         problemConfig.Answers = new List<AnswerConfig>();
 
         int selectedNumberIndex = UnityEngine.Random.Range(0, Numbers.Count);
-        problemConfig.QuestionLiteral = Numbers[selectedNumberIndex].Literal;
+        NumberConfig selectedNumberConfig = Numbers[selectedNumberIndex];
+        problemConfig.Id = selectedNumberConfig.Literal;
+        problemConfig.QuestionLiteral = selectedNumberConfig.Literal;
 
         List<int> shownIndices = new List<int> { selectedNumberIndex };
         int extraAnswers = Mathf.Min(responsesAvailable - 1, Numbers.Count - 1);

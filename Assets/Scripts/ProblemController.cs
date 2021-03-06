@@ -14,9 +14,10 @@ public class ProblemController : MonoBehaviour
 
     ProblemConfig _currentProblemConfig;
     AnswerView _correctAnswerView;
-    int _currentProblemIndex = 0;
     bool _isFirstTry = false;
 
+    int _customProblemIndex = 0;
+    
     private void Awake()
     {
         if (_problemsConfig != null) 
@@ -79,8 +80,8 @@ public class ProblemController : MonoBehaviour
             return;
         }
 
-        _currentProblemIndex++;
-        if (_currentProblemIndex >= _problemsConfig.CustomProblems.Count)
+        _customProblemIndex++;
+        if (_customProblemIndex >= _problemsConfig.CustomProblems.Count)
         {
             _questionView.ShowMessage("Enhorabuena! Has acabado los problemas custom!");
             CleanAnswers();
@@ -95,7 +96,7 @@ public class ProblemController : MonoBehaviour
     {
         if (_problemsConfig.UseCustomProblems)
         {
-            _currentProblemConfig = _problemsConfig.CustomProblems[_currentProblemIndex];
+            _currentProblemConfig = _problemsConfig.CustomProblems[_customProblemIndex];
         }
         else
         {

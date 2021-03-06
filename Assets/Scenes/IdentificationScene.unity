@@ -1327,6 +1327,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1941955167}
     m_Modifications:
+    - target: {fileID: 5194405622373564664, guid: 172d3d2383bf1f140b3568db1044405d,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 5194405622373564664, guid: 172d3d2383bf1f140b3568db1044405d,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 5194405622373564664, guid: 172d3d2383bf1f140b3568db1044405d,
+        type: 3}
+      propertyPath: m_text
+      value: This is a question
+      objectReference: {fileID: 0}
     - target: {fileID: 5194405622373564665, guid: 172d3d2383bf1f140b3568db1044405d,
         type: 3}
       propertyPath: m_LocalPosition.x
