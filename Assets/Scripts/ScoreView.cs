@@ -10,12 +10,7 @@ public class ScoreView : MonoBehaviour
 
     // I'm going to need the actual VALUE, good enough for now
 
-    private void Awake()
-    {
-        ResetView();
-    }
-
-    void ResetView()
+    public void Reset()
     {
         _correctText.text = "0";
         _secondTryText.text = "0";
