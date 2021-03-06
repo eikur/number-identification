@@ -8,14 +8,17 @@ public class ScoreView : MonoBehaviour
     [SerializeField] TextMeshProUGUI _secondTryText;
     [SerializeField] TextMeshProUGUI _incorrectText;
 
-    // I'm going to need the actual VALUE, good enough for now
+    ScoreModel _scoreModel;
 
-    public void Reset()
+    public void Init(ScoreModel scoreModel)
     {
-        _correctText.text = "0";
-        _secondTryText.text = "0";
-        _incorrectText.text = "0";
+        _scoreModel = scoreModel;
     }
 
-
+    public void Update()
+    {
+        _correctText.text = _scoreModel.Correct.ToString();
+        _secondTryText.text = _scoreModel.SecondTry.ToString();
+        _incorrectText.text = _scoreModel.Incorrect.ToString();
+    }
 }

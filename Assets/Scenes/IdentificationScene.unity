@@ -1052,6 +1052,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb7a03c20a27ac64baf51ad62370cfa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _scoreModel: {fileID: 11400000, guid: 843531f9c71c34344810ff671bc95c44, type: 2}
   _problemsConfig: {fileID: 11400000, guid: b9df375639b703347b4e3bfb7fe48e1c, type: 2}
   _questionView: {fileID: 1149910433}
   _scoreView: {fileID: 1699934195}
@@ -1333,6 +1334,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Score
       objectReference: {fileID: 0}
+    - target: {fileID: 5924651806723940087, guid: e7c2e438617e7c34baa9dad9bd7adbd7,
+        type: 3}
+      propertyPath: _scoreModel
+      value: 
+      objectReference: {fileID: 11400000, guid: 843531f9c71c34344810ff671bc95c44,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e7c2e438617e7c34baa9dad9bd7adbd7, type: 3}
 --- !u!1001 &5194405621223685479

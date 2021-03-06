@@ -2,6 +2,7 @@
 
 public class ProblemController : MonoBehaviour
 {
+    [SerializeField] ScoreModel _scoreModel;
     [SerializeField] ProblemsConfig _problemsConfig;
 
     [SerializeField] QuestionView _questionView;
@@ -9,8 +10,9 @@ public class ProblemController : MonoBehaviour
     [SerializeField] Transform _answersContainer;
     [SerializeField] AnswerView _answerPrefab;
 
-    int _currentProblemIndex = 0;
     ProblemConfig _currentProblemConfig;
+    int _currentProblemIndex = 0;
+    bool _isFirstTry = false;
 
     private void Awake()
     {
@@ -26,32 +28,51 @@ public class ProblemController : MonoBehaviour
 
     void Init()
     {
-        _scoreView.Reset();
-        ShowCurrentProblem();
-    }
+        _scoreModel.Reset();
 
-    void ShowMisconfiguration()
-    {
-        _questionView.Show("There are no problems configured", false);
+        _scoreView.Init(_scoreModel);
+        _scoreView.Update();
+
+        ShowCurrentProblem();
     }
 
     void ClickedAnswer(AnswerConfig answerConfig)
     {
         if (answerConfig.IsCorrect)
         {
+            if (_isFirstTry)
+            {
+                _scoreModel.Correct++;
+            }
+            else
+            {
+                _scoreModel.SecondTry++;
+            }
+
             TryShowNextProblem();
+            return;
         }
+
+        if (!_isFirstTry)
+        {
+            _scoreModel.Incorrect++;
+            TryShowNextProblem();
+            return;
+        }
+
+        _isFirstTry = false;
     }
 
 
     void TryShowNextProblem()
     {
+        _scoreView.Update();
         _currentProblemIndex++;
+
         if (_currentProblemIndex >= _problemsConfig.Problems.Count)
         {
-            // reached the end! 
+            _questionView.Show("Congrats! You reached the end!", false);
             CleanAnswers();
-            _questionView.Show("Reached the end!");
         }
         else
         {
@@ -73,6 +94,8 @@ public class ProblemController : MonoBehaviour
             answerButton.Init(answerConfig);
             answerButton.OnClicked += ClickedAnswer;
         }
+
+        _isFirstTry = true;
     }
 
     void CleanAnswers()
@@ -82,5 +105,11 @@ public class ProblemController : MonoBehaviour
         {
             GameObject.DestroyImmediate(_answersContainer.GetChild(i).gameObject);
         }
+    }
+
+    void ShowMisconfiguration()
+    {
+        _questionView.Show("There are no problems configured", false);
+        CleanAnswers();
     }
 }
